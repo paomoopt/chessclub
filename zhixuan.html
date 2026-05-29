@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>图片展示</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: #0f0f0f;
+            color: #e0e0e0;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 300;
+            margin-bottom: 40px;
+            letter-spacing: 2px;
+            color: #ffffff;
+        }
+
+        .gallery {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            align-items: center;
+        }
+
+        .gallery img {
+            width: 100%;
+            max-width: 900px;
+            border-radius: 8px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .gallery img:hover {
+            transform: scale(1.01);
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.7);
+        }
+
+        /* Lightbox */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.92);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            cursor: zoom-out;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox img {
+            max-width: 95vw;
+            max-height: 95vh;
+            border-radius: 4px;
+            box-shadow: 0 0 60px rgba(0, 0, 0, 0.8);
+        }
+
+        .counter {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="gallery">
+        <img src="1.png" alt="图片 1" onclick="openLightbox(this)">
+        <img src="2.png" alt="图片 2" onclick="openLightbox(this)">
+        <img src="3.png" alt="图片 3" onclick="openLightbox(this)">
+        <img src="4.png" alt="图片 4" onclick="openLightbox(this)">
+        <img src="5.png" alt="图片 5" onclick="openLightbox(this)">
+        <img src="6.png" alt="图片 6" onclick="openLightbox(this)">
+        <img src="7.png" alt="图片 7" onclick="openLightbox(this)">
+    </div>
+
+    <div class="lightbox" onclick="closeLightbox()">
+        <img id="lightbox-img" src="" alt="">
+    </div>
+
+    <div class="counter" id="counter"></div>
+
+    <script>
+        function openLightbox(img) {
+            const lightbox = document.querySelector('.lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            lightboxImg.src = img.src;
+            lightbox.classList.add('active');
+            document.getElementById('counter').textContent = img.alt;
+        }
+
+        function closeLightbox() {
+            document.querySelector('.lightbox').classList.remove('active');
+            document.getElementById('counter').textContent = '';
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeLightbox();
+        });
+    </script>
+</body>
+</html>
